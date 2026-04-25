@@ -1,9 +1,9 @@
 <%- include('../partials/header') %>
 
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+<div class="title-header">
     <h2>Discover Notes</h2>
-    <form action="/" method="GET" class="search-bar" style="margin-bottom: 0;">
-        <input type="text" name="search" class="form-control" placeholder="Search title, subject, tags..." value="<%= searchQuery %>" style="width: 300px;">
+    <form action="/" method="GET" class="search-bar">
+        <input type="text" name="search" class="form-control search-input" placeholder="Search title, subject, tags..." value="<%= searchQuery %>">
         <button type="submit" class="btn">Search</button>
     </form>
 </div>
