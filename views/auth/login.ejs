@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+<div class="form-container">
+    <h2>Welcome Back</h2>
+    <form action="/auth/login" method="POST">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn form-btn">Log In</button>
+    </form>
+    <a href="/auth/signup" class="form-link">Don't have an account? Sign up</a>
+</div>
+
+<%- include('../partials/footer') %>

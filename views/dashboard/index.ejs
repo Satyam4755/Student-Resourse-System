@@ -1,0 +1,52 @@
+<%- include('../partials/header') %>
+
+<h2>Analytics Dashboard</h2>
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <div class="stat-value"><%= stats.totalNotes %></div>
+        <div class="stat-label">Notes Uploaded</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value"><%= stats.totalLikes %></div>
+        <div class="stat-label">Total Likes</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value"><%= stats.totalComments %></div>
+        <div class="stat-label">Total Comments</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value"><%= stats.totalDownloads %></div>
+        <div class="stat-label">Total Downloads</div>
+    </div>
+</div>
+
+<h3 style="margin-bottom: 1.5rem;">Your Uploaded Notes</h3>
+<div class="feed-grid">
+    <% if(notes.length === 0) { %>
+        <p style="color: var(--text-secondary);">You haven't uploaded any notes yet.</p>
+    <% } %>
+    <% notes.forEach(note => { %>
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title"><%= note.title %></h3>
+                    <p class="card-subtitle"><%= note.subject %> &bull; <%= new Date(note.createdAt).toLocaleDateString() %></p>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <div style="display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+                    <span>❤️ <%= note.likes.length %> Likes</span>
+                    <span>💬 <%= note.comments.length %> Comments</span>
+                    <span>📥 <%= note.downloads %> Downloads</span>
+                </div>
+                
+                <form action="/dashboard/delete/<%= note._id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this note?');">
+                    <button type="submit" class="btn btn-danger" style="width: 100%; padding: 0.5rem;">Delete Note</button>
+                </form>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+<%- include('../partials/footer') %>

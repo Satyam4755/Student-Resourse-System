@@ -1,0 +1,81 @@
+<%- include('../partials/header') %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>Discover Notes</h2>
+    <form action="/" method="GET" class="search-bar" style="margin-bottom: 0;">
+        <input type="text" name="search" class="form-control" placeholder="Search title, subject, tags..." value="<%= searchQuery %>" style="width: 300px;">
+        <button type="submit" class="btn">Search</button>
+    </form>
+</div>
+
+<div class="feed-grid">
+    <% if(notes.length === 0) { %>
+        <p style="color: var(--text-secondary); grid-column: 1 / -1; text-align: center; margin-top: 2rem;">No notes found. Be the first to upload!</p>
+    <% } %>
+    <% notes.forEach(note => { %>
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title"><%= note.title %></h3>
+                    <p class="card-subtitle">By <%= note.uploadedBy ? note.uploadedBy.username : 'Unknown' %> &bull; <%= note.subject %></p>
+                </div>
+                <a href="/notes/<%= note._id %>/download" class="btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Download (📥 <%= note.downloads %>)</a>
+            </div>
+            
+            <div class="card-tags">
+                <% note.tags.forEach(tag => { %>
+                    <% if (tag.trim() !== '') { %>
+                    <span class="tag"><%= tag.trim() %></span>
+                    <% } %>
+                <% }) %>
+            </div>
+            
+            <div class="card-body">
+                <%= note.description %>
+            </div>
+            
+            <div class="card-actions">
+                <div class="action-btns">
+                    <form action="/notes/<%= note._id %>/like" method="POST">
+                        <% const isLiked = user && note.likes.includes(user.id); %>
+                        <button type="submit" class="icon-btn <%= isLiked ? 'liked' : '' %>">
+                            ❤️ <%= note.likes.length %>
+                        </button>
+                    </form>
+                    <button class="icon-btn" onclick="document.getElementById('comments-<%= note._id %>').style.display = document.getElementById('comments-<%= note._id %>').style.display === 'none' ? 'block' : 'none'">
+                        💬 <%= note.comments.length %>
+                    </button>
+                </div>
+                <button class="icon-btn" onclick="navigator.clipboard.writeText(window.location.origin + '/?search=<%= note.title %>'); alert('Link copied!');">
+                    🔗 Share
+                </button>
+            </div>
+            
+            <!-- Comments Section (Hidden by default) -->
+            <div id="comments-<%= note._id %>" style="display: none;">
+                <div class="comments-section">
+                    <% if(note.comments.length === 0) { %>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); text-align: center;">No comments yet.</p>
+                    <% } %>
+                    <% note.comments.forEach(comment => { %>
+                        <div class="comment">
+                            <span class="comment-author"><%= comment.username %></span>
+                            <span class="comment-text"><%= comment.text %></span>
+                        </div>
+                    <% }) %>
+                </div>
+                
+                <% if(user) { %>
+                    <form action="/notes/<%= note._id %>/comment" method="POST" class="comment-form">
+                        <input type="text" name="text" class="comment-input" placeholder="Add a comment..." required>
+                        <button type="submit" class="btn" style="padding: 0.4rem 1rem;">Post</button>
+                    </form>
+                <% } else { %>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem; text-align: center;"><a href="/auth/login" style="color: var(--primary);">Log in</a> to comment.</p>
+                <% } %>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+<%- include('../partials/footer') %>

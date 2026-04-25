@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Resource Hub</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header>
+    <a href="/" class="logo">ResourceHub</a>
+    <nav>
+        <ul>
+            <li><a href="/">Feed</a></li>
+            <% if (user) { %>
+                <li><a href="/notes/upload">Upload</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/auth/logout" class="btn btn-outline" style="padding: 0.3rem 1rem;">Logout</a></li>
+            <% } else { %>
+                <li><a href="/auth/login" class="btn btn-outline" style="padding: 0.3rem 1rem;">Login</a></li>
+                <li><a href="/auth/signup" class="btn" style="padding: 0.3rem 1rem;">Sign Up</a></li>
+            <% } %>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div class="container">
+        <% if (locals.error) { %>
+            <div class="alert alert-error"><%= locals.error %></div>
+        <% } %>
+        <% if (locals.success) { %>
+            <div class="alert alert-success"><%= locals.success %></div>
+        <% } %>

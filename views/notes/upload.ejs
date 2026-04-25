@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+
+<div class="form-container" style="max-width: 600px;">
+    <h2>Upload Notes</h2>
+    <form action="/notes/upload" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject / Course</label>
+            <input type="text" id="subject" name="subject" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="tags">Tags (comma separated)</label>
+            <input type="text" id="tags" name="tags" class="form-control" placeholder="e.g. math, midterm, 2023">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="file">ZIP File</label>
+            <input type="file" id="file" name="file" class="form-control" accept=".zip" required>
+            <small style="color: var(--text-secondary); display: block; margin-top: 0.5rem;">Only .zip files allowed. Max 100MB.</small>
+        </div>
+        <button type="submit" class="btn form-btn">Upload Note</button>
+    </form>
+</div>
+
+<%- include('../partials/footer') %>
