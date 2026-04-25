@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res) => {
     if (req.session.userId) return res.redirect('/dashboard');
